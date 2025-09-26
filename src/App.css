@@ -221,18 +221,21 @@ input {
 }
 
 .modal-north {
-  font-size:32pt;
+  font-size:18pt;
   font-weight: bold;
   background-color: #669966;
   color:white;
+  padding: 10px 14px;
 }
 
 .modal-center {
   display: grid;
-  grid-template-columns: 30% 65%;
-  grid-template-rows: 33% 33% 33%;
-  gap: 10px 20px;
-  font-size: 48pt;
+  grid-template-columns: 120px 1fr; 
+  row-gap: 12px;
+  column-gap: 14px;
+  align-items: center;
+  font-size: 14pt;
+  padding: 14px;
 }
 
 span {
@@ -245,7 +248,9 @@ span {
   flex-direction: row;
   background-color: lightgray;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 14px;
 }
 
 .modal-center-content {
@@ -254,16 +259,20 @@ span {
 }
 
 .modal-prompt {  
-  font-size:28pt;
+  font-size:14pt;
   font-weight: bold;
 }
 
 .modal-textfield {
-  font-size:28pt;
+  font-size: 14pt;
+  padding: 8px 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .modal-button {
-  font-size: 20pt;
+  font-size: 12pt;
+  padding: 6px 12px;
 }
 
 #title-prompt {
@@ -405,20 +414,6 @@ span {
   margin-right: 2px;
 }
 
-.song-pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: flex-start;
-  background-color: #e8e9d4;;
-  border-radius: 22px;
-  padding: 10px 14px;
-  min-height: 52px;
-  box-sizing: border-box;
-  font-style: italic;
-  font-size: 18px;
-}
-
 .song-text {
   display: inline-flex;
   align-items: baseline;
@@ -440,10 +435,17 @@ span {
 }
 
 .song-pill {
-  border-radius:45px;        
-  padding: 20px 26px;         
-  min-height: 78px;           
+  display: flex;
+  align-items: center;
   gap: 10px;
+  justify-content: flex-start;
+  background-color: #e8e9d4; 
+  border-radius: 45px;
+  padding: 20px 26px;
+  min-height: 78px;
+  box-sizing: border-box;
+  font-style: italic;
+  font-size: 18px;
 }
 
 .song-text { flex: 1 1 auto; min-width: 0; }
@@ -485,16 +487,11 @@ span {
 }
 
 .modal-root {
-  max-width: 520px !important;
-  max-height: 380px !important;
-}
-
-.modal-north { font-size: 20pt !important; }
-.modal-center { font-size: 14pt !important; }
-.modal-button { font-size: 14pt !important; }
-
-.modal-center {
-  gap: 8px 12px;
+  width: 92vw;             
+  max-width: 560px;        
+  max-height: 75vh;        
+  overflow: auto;          
+  border-radius: 10px;
 }
 
 .song-card .song-pill {
