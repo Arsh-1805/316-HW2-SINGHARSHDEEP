@@ -171,13 +171,6 @@ h1, h2, h3, .app-title, .playlist-title {
   cursor: not-allowed;
 }
 
-.song-card, .song-card-dragged-to { 
-  display:flex;
-  align-items: center;
-  font-size: 24pt;
-  height:20%;
-}
-
 input {
   font-size:20pt;
 }
@@ -381,7 +374,7 @@ span {
   }
 }
 
-material-symbols-outlined {
+.material-symbols-outlined {
   font-family: "Material Symbols Outlined";
   font-weight: normal;
   font-style: normal;
@@ -391,26 +384,6 @@ material-symbols-outlined {
   vertical-align: middle;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-song-card,
-.song-card-dragged-to {
-  background-color: #5e8c5e;
-  border-radius: 20px;
-  padding: 8px 12px;
-  margin: 8px 10px;
-  color: #111;
-  font-size: 16pt;
-  cursor: grab;
-  user-select: none;
-  transition: background-color 0.15s ease;
-}
-
-.song-card:hover { filter: brightness(0.98); }
-
-.song-card-dragged-to {
-  outline: 2px dashed #e1e4cb;
-  background-color: #365e36;
 }
 
 .song-row {
@@ -424,29 +397,53 @@ song-card,
   align-items: center;
   gap: 12px;
 }
+
 .song-index {
-  color: #fff;
   font-weight: 700;
-  opacity: 0.95;
+  color: #1a1a1a;
+  margin-right: 2px;
 }
 
 .song-pill {
-  background-color: #e6e6d6;
-  border-radius: 16px;
-  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-start;
+  background-color: #e8e9d4;;
+  border-radius: 22px;
+  padding: 10px 14px;
+  min-height: 52px;
+  box-sizing: border-box;
+  font-style: italic;
 }
 
-.song-link { text-decoration: underline; color: inherit; }
-.song-year { opacity: 0.85; font-style: italic; }
-.song-artist { color: #d64141; font-style: italic; }
+.song-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+  
+.song-title a { text-decoration: underline; font-weight: 700; color: inherit; }
+.song-year   { opacity: 0.9; }
+.by-word     { opacity: 0.85; }
+.song-artist { color: #d64141; font-weight: 600; }
 
 .song-delete-btn {
-  background: #f0f0f0;
+  margin-left: auto;
+  background: #efefef;
   border: 1px solid #cfcfcf;
-  border-radius: 16px;
-  padding: 6px 10px;
+  border-radius: 14px;
+  width: 34px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
+.song-delete-btn { margin-left: auto; }
+
 .song-delete-btn:hover { background: #ffffff; }
 
 #song-cards { overflow: auto; }

@@ -71,30 +71,31 @@ return (
     onDragEnter={this.handleDragEnter}
     onDragLeave={this.handleDragLeave}
     onDrop={this.handleDrop}
+    onDoubleClick={() => this.props.startEditSong?.(Number(num))}
   >
-    <div className="song-row">
-      <div className="song-main">
-        <span className="song-index">{Number(num) + 1}.</span>
-        <span className="song-pill">
+    <div className="song-pill">
+        <span className="song-index">{Number(num) }.</span>
+
+        <div className="song-text">
+        <span className="song-title">
           {song.youTubeId ? (
             <a
-              className="song-link"
+
               href={`https://www.youtube.com/watch?v=${song.youTubeId}`}
               target="_blank"
               rel="noreferrer"
             >
-              {song.title} <span className="song-year">({song.year ?? "—"})</span> by{" "}
-              <span className="song-artist">{song.artist}</span>
+              {song.title}
             </a>
           ) : (
-            <>
-              {song.title} <span className="song-year">({song.year ?? "—"})</span> by{" "}
-              <span className="song-artist">{song.artist}</span>
-            </>
+            song.title
           )}
         </span>
+        {song.year ? <span className="song-year"> ({song.year})</span> : null}
+        <span className="by-word"> by </span>
+        <span className="song-artist">{song.artist}</span>
       </div>
-      
+
       <button
         className="song-delete-btn"
         onClick={(e) => {
@@ -105,9 +106,9 @@ return (
         aria-label="Remove song"
       >
         <span className="material-symbols-outlined">delete</span>
-      </button>
-    </div>
-  </div>
+            </button>
+      </div>
+      </div>
 );
-}  
+}
 }
