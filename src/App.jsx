@@ -229,7 +229,7 @@ class App extends React.Component {
         songs.splice(index + 1, 0, copy);
         this.updateCurrentListSongs(songs);
     };
-    
+
     addNewSong = () => {
         if (!this.state.currentList) return;
         const newSong = { 
@@ -280,6 +280,35 @@ class App extends React.Component {
             this.db.mutationUpdateSessionData(this.state.sessionData);
         });
     };
+
+    componentDidMount() {
+        window.addEventListener("keydown", this.handleGlobalKeys);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("keydown", this.handleGlobalKeys);
+    }
+
+    handleGlobalKeys = (e) => {
+  // don't hijack typing in fields
+  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+  if (tag === "input" || tag === "textarea") return;
+
+  const isMac = navigator.platform.toUpperCase().includes("MAC");
+  const ctrl = isMac ? e.metaKey : e.ctrlKey;
+
+  // Undo: Ctrl/Cmd+Z
+  if (ctrl && !e.shiftKey && e.key.toLowerCase() === "z") {
+    e.preventDefault();
+    this.undo();
+    return;
+  }
+  // Redo: Ctrl+Y  or  Shift+Ctrl+Z
+  if ((ctrl && e.key.toLowerCase() === "y") || (ctrl && e.shiftKey && e.key.toLowerCase() === "z")) {
+    e.preventDefault();
+    this.redo();
+  }
+};
+
 
     // THIS FUNCTION MOVES A SONG IN THE CURRENT LIST FROM
     // start TO end AND ADJUSTS ALL OTHER ITEMS ACCORDINGLY

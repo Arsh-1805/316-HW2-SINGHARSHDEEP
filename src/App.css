@@ -484,8 +484,22 @@ span {
   justify-content: center;
   cursor: pointer;
 }
-.song-delete-btn { margin-left: auto; }
 
+.song-duplicate-btn,
+.song-delete-btn {
+  margin-left: 8px;
+  background: #efefef;
+  border: 1px solid #cfcfcf;
+  border-radius: 14px;
+  width: 34px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.song-duplicate-btn:hover,
 .song-delete-btn:hover { background: #ffffff; }
 
 #song-cards { overflow: auto; }
@@ -553,3 +567,10 @@ span {
 .song-card-dragged-to .song-delete-btn { background:#fff; border-color:#d9d9d9; }
 
 .song-card, .song-card-dragged-to { margin: 8px 6px; }
+
+.toolbar-button.disabled,
+.toolbar-btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
