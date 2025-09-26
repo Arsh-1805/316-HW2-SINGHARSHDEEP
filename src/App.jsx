@@ -18,6 +18,8 @@ import SidebarHeading from './components/SidebarHeading.jsx';
 import SidebarList from './components/PlaylistCards.jsx';
 import SongCards from './components/SongCards.jsx';
 import Statusbar from './components/Statusbar.jsx';
+import EditSongModal from './components/EditSongModal.jsx';
+
 
 class App extends React.Component {
     constructor(props) {
@@ -36,7 +38,9 @@ class App extends React.Component {
         this.state = {
             listKeyPairMarkedForDeletion : null,
             currentList : null,
-            sessionData : loadedSessionData
+            sessionData : loadedSessionData,
+            isSongEditOpen: false,
+            songEditIndex: null,
         }
     }
     sortKeyNamePairsByName = (keyNamePairs) => {
@@ -203,6 +207,36 @@ class App extends React.Component {
             this.db.mutationUpdateList(this.state.currentList);
         });
     }
+    updateCurrentListSongs = (songs) => {
+        if (!this.state.currentList) return;
+        const list = { ...this.state.currentList, songs: [...songs] };
+        this.setStateWithUpdatedList(list);
+        this.db.mutationUpdateList(list);
+        this.db.mutationUpdateSessionData(this.state.sessionData);
+    };
+
+    deleteSong = (index) => {
+        if (!this.state.currentList) return;
+        const songs = [...this.state.currentList.songs];
+        songs.splice(index, 1);
+        this.updateCurrentListSongs(songs);
+    };
+
+    duplicateSong = (index) => {
+        if (!this.state.currentList) return;
+        const songs = [...this.state.currentList.songs];
+        const copy = { ...songs[index] };
+        songs.splice(index + 1, 0, copy);
+        this.updateCurrentListSongs(songs);
+    };
+    addNewSong = () => {
+        if (!this.state.currentList) return;
+        const songs = [
+        ...this.state.currentList.songs,
+        { title: "Untitled", artist: "Unknown", year: "—", youTubeId: "" },
+        ];
+        this.updateCurrentListSongs(songs);
+    };
     getPlaylistSize = () => {
         return this.state.currentList.songs.length;
     }
@@ -274,6 +308,32 @@ class App extends React.Component {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.remove("is-visible");
     }
+
+    requestEditSong = (index) => {
+    this.setState({ isSongEditOpen: true, songEditIndex: index });
+    }
+
+    cancelEditSong = () => {
+    this.setState({ isSongEditOpen: false, songEditIndex: null });
+    }
+
+    confirmEditSong = (updated) => {
+    const idx = this.state.songEditIndex;
+    if (idx == null || !this.state.currentList) return;
+
+    const songs = [...this.state.currentList.songs];
+    songs[idx] = {
+        ...songs[idx],
+        title: (updated.title ?? "").trim(),
+        artist: (updated.artist ?? "").trim(),
+        year: (updated.year ?? "").toString().trim(),
+        youTubeId: (updated.youTubeId ?? "").trim()
+    };
+
+    this.updateCurrentListSongs(songs); // save + persist
+    this.setState({ isSongEditOpen: false, songEditIndex: null });
+    }
+
     render() {
         let canAddSong = this.state.currentList !== null;
         let canUndo = this.tps.hasTransactionToUndo();
@@ -303,9 +363,22 @@ class App extends React.Component {
                 />
                 <SongCards
                     currentList={this.state.currentList}
-                    moveSongCallback={this.addMoveSongTransaction} />
+                    moveSongCallback={this.addMoveSongTransaction}
+                    requestEditSong={this.requestEditSong} 
+                />
+                <EditSongModal
+                    isOpen={this.state.isSongEditOpen}
+                    initial={
+                    this.state.songEditIndex != null && this.state.currentList
+                    ? this.state.currentList.songs[this.state.songEditIndex]
+                    : null
+                    }
+                    onConfirm={this.confirmEditSong}
+                    onCancel={this.cancelEditSong}
+                />
                 <Statusbar 
-                    currentList={this.state.currentList} />
+                    currentList={this.state.currentList} 
+                />
                 <DeleteListModal
                     listKeyPair={this.state.listKeyPairMarkedForDeletion}
                     hideDeleteListModalCallback={this.hideDeleteListModal}
