@@ -430,6 +430,29 @@ span {
 .by-word     { opacity: 0.85; }
 .song-artist { color: #d64141; font-weight: 600; }
 
+.song-card,
+.song-card-dragged-to {
+  margin: 8px 12px;          
+  padding: 6px 10px;         
+  border-radius: 30px;        
+}
+
+.song-pill {
+  border-radius: 28px;        
+  padding: 14px 18px;         
+  min-height: 60px;           
+  gap: 10px;
+}
+
+.song-text { flex: 1 1 auto; min-width: 0; }
+
+.song-delete-btn {
+  margin-left: auto;          
+  width: 36px;                
+  height: 30px;
+  border-radius: 16px;
+}
+
 .song-delete-btn {
   margin-left: auto;
   background: #efefef;
