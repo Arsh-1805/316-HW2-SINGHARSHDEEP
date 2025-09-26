@@ -50,7 +50,7 @@ export default class PlaylistCard extends React.Component {
     }
 
     render() {
-        const { keyNamePair, selected } = this.props;
+        const { keyNamePair, loadListCallback, deleteListCallback, renameListCallback, duplicateListCallback, selected} = this.props;
 
         if (this.state.editActive) {
             return (
@@ -63,37 +63,50 @@ export default class PlaylistCard extends React.Component {
                     onChange={this.handleUpdate}
                     defaultValue={keyNamePair.name}
                 />)
-        }
-        else {
-
-            let selectClass = "unselected-playlist-card";
-            if (selected) {
-                selectClass = "selected-playlist-card";
-            }
-            return (
-                <div
-                    id={keyNamePair.key}
-                    key={keyNamePair.key}
-                    onClick={this.handleClick}
-                    className={'playlist-card ' + selectClass}>
-                    <span
-                        id={"playlist-card-text-" + keyNamePair.key}
-                        key={keyNamePair.key}
-                        className="playlist-card-text">
-                        {keyNamePair.name}
-                    </span>
-                    <button
-                        id={"delete-list-" + keyNamePair.key}
-                        className="card-button"
-                        onClick={this.handleDeleteList}
-                        title="Delete this playlist"
-                        aria-label="Delete this playlist"
-                        onMouseDown={(e) => e.stopPropagation()}  // avoid focusing parent on mousedown
-                    >
-                        <span className="material-symbols-outlined">delete</span>
-                    </button>
-                </div>
-            );
-        }
+            ;
     }
+        else {
+      let selectClass = selected ? "selected-playlist-card" : "unselected-playlist-card";
+      return (
+        <div
+          id={keyNamePair.key}
+          key={keyNamePair.key}
+          onClick={this.handleClick}
+          className={"playlist-card " + selectClass}
+        >
+          <span
+            id={"playlist-card-text-" + keyNamePair.key}
+            className="playlist-card-text"
+          >
+            {keyNamePair.name}
+          </span>
+
+          {/* Duplicate button */}
+          <button
+            className="card-button"
+            title="Duplicate playlist"
+            onClick={(e) => {
+              e.stopPropagation();
+              // ⬇️ USE the prop (works whether destructured or via this.props)
+              duplicateListCallback?.(keyNamePair.key);
+            }}
+          >
+            <span className="material-symbols-outlined">content_copy</span>
+          </button>
+
+          {/* Delete button */}
+          <button
+            id={"delete-list-" + keyNamePair.key}
+            className="card-button"
+            onClick={this.handleDeleteList}
+            title="Delete this playlist"
+            aria-label="Delete this playlist"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <span className="material-symbols-outlined">delete</span>
+          </button>
+        </div>
+      );
+    }
+}
 }

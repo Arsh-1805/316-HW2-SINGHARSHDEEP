@@ -61,7 +61,8 @@ export default class SongCard extends React.Component {
         onDoubleClick={onDoubleClick}                 
       >
         <div className="song-pill" onDoubleClick={onDoubleClick}>
-          <span className="song-index">{displayNum}.
+          <span className="song-index" onDoubleClick={onDoubleClick}>
+            {displayNum}.
           </span>
 
           <div className="song-text">
@@ -84,8 +85,17 @@ export default class SongCard extends React.Component {
           </div>
 
           <button
+            className="song-dup-btn"
+            onClick={(e) => { e.stopPropagation(); this.props.onDuplicate?.(this.props.index); }}
+            title="Duplicate song"
+            aria-label="Duplicate song"
+            >
+            <span className="material-symbols-outlined">content_copy</span>
+          </button>
+
+          <button
             className="song-delete-btn"
-            onClick={(e) => { e.stopPropagation(); onDelete?.(index); }}
+            onClick={(e) => { e.stopPropagation(); this.props.onDelete?.(this.props.index); }}
             title="Remove song"
             aria-label="Remove song"
           >

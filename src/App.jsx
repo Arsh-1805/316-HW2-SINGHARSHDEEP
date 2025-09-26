@@ -239,10 +239,47 @@ class App extends React.Component {
         };
         this.tps.processTransaction(new AddSong_Transaction(this, newSong, null));
     };
-
     getPlaylistSize = () => {
         return this.state.currentList.songs.length;
     }
+
+    duplicatePlaylist = (key) => {
+        const original = this.db.queryGetList(key);
+         if (!original) return;
+
+        const newKey = this.state.sessionData.nextKey;
+        const newNameBase = `${original.name} (Copy)`;
+        const existingNames = new Set(this.state.sessionData.keyNamePairs.map(p => p.name));
+        let newName = newNameBase;
+        let n = 2;
+        while (existingNames.has(newName)) {
+        newName = `${newNameBase} ${n++}`;
+        }
+
+        const newList = {
+        key: newKey,
+        name: newName,
+        songs: original.songs.map(s => ({ ...s }))
+    };
+
+        const newPair = { key: newKey, name: newName };
+        const updatedPairs = [...this.state.sessionData.keyNamePairs, newPair];
+        this.sortKeyNamePairsByName(updatedPairs);
+
+        this.setState(prev => ({
+        ...prev,
+            currentList: newList, 
+            sessionData: {
+      nextKey: prev.sessionData.nextKey + 1,
+      counter: prev.sessionData.counter + 1,
+      keyNamePairs: updatedPairs
+     }
+        }), () => {
+            this.db.mutationCreateList(newList);
+            this.db.mutationUpdateSessionData(this.state.sessionData);
+        });
+    };
+
     // THIS FUNCTION MOVES A SONG IN THE CURRENT LIST FROM
     // start TO end AND ADJUSTS ALL OTHER ITEMS ACCORDINGLY
     moveSong(start, end) {
@@ -354,6 +391,7 @@ class App extends React.Component {
                     deleteListCallback={this.markListForDeletion}
                     loadListCallback={this.loadList}
                     renameListCallback={this.renameList}
+                    duplicateListCallback={this.duplicatePlaylist}
                 />
                 <EditToolbar
                     canAddSong={this.state.currentList !== null}
