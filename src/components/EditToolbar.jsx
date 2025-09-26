@@ -32,7 +32,7 @@ export default class EditToolbar extends React.Component {
                 disabled={!canUndo}
                 title="Undo"
             />
-            <input  
+            <input 
                 type="button" 
                 id='redo-button' 
                 value="⟳" 
