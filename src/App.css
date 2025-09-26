@@ -432,15 +432,15 @@ span {
 
 .song-card,
 .song-card-dragged-to {
-  margin: 8px 12px;          
-  padding: 6px 10px;         
-  border-radius: 30px;        
+  margin: 3px 3px;          
+  padding: 5px 2px;         
+  border-radius: 50px;        
 }
 
 .song-pill {
-  border-radius: 28px;        
-  padding: 14px 18px;         
-  min-height: 60px;           
+  border-radius:45px;        
+  padding: 20px 26px;         
+  min-height: 78px;           
   gap: 10px;
 }
 
