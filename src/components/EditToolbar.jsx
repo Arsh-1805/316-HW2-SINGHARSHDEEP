@@ -14,42 +14,42 @@ export default class EditToolbar extends React.Component {
         if (!canClose) closeClass += " disabled";
         return (
             <div id="edit-toolbar">
-            <button 
+            <input
                 type="button" 
                 id='add-song-button' 
                 value="+" 
                 className={addSongClass}
+                onClick={canAddSong ? (() => { console.log('add click'); addSongCallback(); }) : undefined}
+                disabled={!canAddSong}
+                title="Add Song"
             />
-            <button 
+            <input
                 type="button" 
                 id='undo-button' 
                 value="⟲" 
                 className={undoClass} 
                 onClick={undoCallback}
+                disabled={!canUndo}
+                title="Undo"
             />
-            <button  
+            <input  
                 type="button" 
                 id='redo-button' 
                 value="⟳" 
                 className={redoClass} 
                 onClick={redoCallback}
+                disabled={!canRedo}
+                title="Redo"
             />
-            <button  
+            <input  
                 type="button" 
                 id='close-button' 
-                value="&#x2715;" 
+                value="x" 
                 className={closeClass} 
                 onClick={closeCallback}
+                disabled={!canClose}
+                title="Close List"
             />
-            <button
-                id="add-song-button"
-                className={canAddSong ? "toolbar-btn" : "toolbar-btn disabled"}
-                disabled={!canAddSong}
-                onClick={canAddSong ? addSongCallback : undefined}
-                title="Add Song"
-            >
-                +
-            </button>
         </div>
         )
     }

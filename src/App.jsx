@@ -357,10 +357,10 @@ class App extends React.Component {
                     renameListCallback={this.renameList}
                 />
                 <EditToolbar
-                    canAddSong={this.state.currentList !== null}
+                    canAddSong={this.hasCurrentList !== null}
                     canUndo={this.tps.hasTransactionToUndo()}
-                    canRedo={this.tps.hasTransactionToRedo()}
-                    canClose={this.state.currentList !== null} 
+                    canRedo={this.tps.hasTransactionToDo()}
+                    canClose={this.hasCurrentList !== null} 
                     undoCallback={this.undo}
                     redoCallback={this.redo}
                     closeCallback={this.closeCurrentList}
