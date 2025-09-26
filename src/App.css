@@ -58,11 +58,19 @@ h1, h2, h3, .app-title, .playlist-title {
  #banner {
   grid-column: 1 / 3;
   grid-row: 1 / 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   text-align:center;
   background-image: linear-gradient(to bottom,         
   #b8b808, #636723);
   color: white;
-  font-size: 54pt;
+  font-size: clamp(24px, 5vw, 40px);
+  font-weight: 700;
+  line-height: 1.1;
+  padding: 10px 16px;
+  margin-bottom: 8px;
   border-color: black;
   border-width: 2px;
   border-style: solid;
@@ -73,7 +81,7 @@ h1, h2, h3, .app-title, .playlist-title {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   text-align:center;
-  font-size: 36pt;
+  font-size: 22pt;
   font-weight: bold;
   display:flex;
   flex-direction: row;
