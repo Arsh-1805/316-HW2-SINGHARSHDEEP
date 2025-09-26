@@ -9,18 +9,18 @@ export default class SongCard extends React.Component {
             draggedTo: false
         }
     }
-    handleDragStart = (e) => {
-    e.dataTransfer.setData("song", e.currentTarget.id);
+    handleDragStart = (event) => {
+    event.dataTransfer.setData("song", event.currentTarget.id);
     this.setState({ isDragging: true });
     };
-    handleDragOver = (e) => { 
-      e.preventDefault(); this.setState({ draggedTo: true }); 
+    handleDragOver = (event) => { 
+      event.preventDefault(); this.setState({ draggedTo: true }); 
     };
-    handleDragEnter = (e) => { 
-      e.preventDefault(); this.setState({ draggedTo: true }); 
+    handleDragEnter = (event) => { 
+      event.preventDefault(); this.setState({ draggedTo: true }); 
     };
-    handleDragLeave = (e) => { 
-      e.preventDefault(); this.setState({ draggedTo: false }); 
+    handleDragLeave = (event) => { 
+      event.preventDefault(); this.setState({ draggedTo: false }); 
     };
   
 
@@ -35,7 +35,6 @@ export default class SongCard extends React.Component {
         
         this.setState({isDragging: false, draggedTo: false});
 
-        // ASK THE MODEL TO MOVE THE DATA
         this.props.moveCallback(sourceNum, targetNum);
     }
 
@@ -62,8 +61,7 @@ export default class SongCard extends React.Component {
         onDoubleClick={onDoubleClick}                 
       >
         <div className="song-pill" onDoubleClick={onDoubleClick}>
-          <span className="song-index" onDoubleClick={onDoubleClick}>
-            {displayNum}.
+          <span className="song-index">{displayNum}.
           </span>
 
           <div className="song-text">
