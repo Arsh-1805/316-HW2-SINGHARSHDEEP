@@ -232,10 +232,13 @@ class App extends React.Component {
     };
     addNewSong = () => {
         if (!this.state.currentList) return;
-        const newSong = [
-        { title: "Untitled", artist: "Unknown", year: "—", youTubeId: "" },
-        ];
-        this.tps.addTransaction(new AddSong_Transaction(this, newSong, null));
+        const newSong = { 
+            title: "Untitled", 
+            artist: "Unknown", 
+            year: "—", 
+            youTubeId: "" 
+        };
+        this.tps.processTransaction(new AddSong_Transaction(this, newSong, null));
     };
 
     getPlaylistSize = () => {

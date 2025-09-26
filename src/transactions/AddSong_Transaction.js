@@ -12,3 +12,10 @@ export default class AddSong_Transaction {
     this.app.updateCurrentListSongs(songs);
     this.index = pos;
     }
+    
+    undoTransaction() {
+    const songs = [...this.app.state.currentList.songs];
+    songs.splice(this.index, 1);
+    this.app.updateCurrentListSongs(songs);
+  }
+}
