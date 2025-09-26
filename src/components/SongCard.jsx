@@ -9,42 +9,29 @@ export default class SongCard extends React.Component {
             draggedTo: false
         }
     }
-    handleDragStart = (event) => {
-        event.dataTransfer.setData("song", event.target.id);
-        this.setState(prevState => ({
-            isDragging: true,
-            draggedTo: prevState.draggedTo
-        }));
-    }
-    handleDragOver = (event) => {
-        event.preventDefault();
-        this.setState(prevState => ({
-            isDragging: prevState.isDragging,
-            draggedTo: true
-        }));
-    }
-    handleDragEnter = (event) => {
-        event.preventDefault();
-        this.setState(prevState => ({
-            isDragging: prevState.isDragging,
-            draggedTo: true
-        }));
-    }
-    handleDragLeave = (event) => {
-        event.preventDefault();
-        this.setState(prevState => ({
-            isDragging: prevState.isDragging,
-            draggedTo: false
-        }));
-    }
+    handleDragStart = (e) => {
+    e.dataTransfer.setData("song", e.currentTarget.id);
+    this.setState({ isDragging: true });
+    };
+    handleDragOver = (e) => { 
+      e.preventDefault(); this.setState({ draggedTo: true }); 
+    };
+    handleDragEnter = (e) => { 
+      e.preventDefault(); this.setState({ draggedTo: true }); 
+    };
+    handleDragLeave = (e) => { 
+      e.preventDefault(); this.setState({ draggedTo: false }); 
+    };
+  
+
     handleDrop = (event) => {
             event.preventDefault();
             const targetId = event.currentTarget.id;        
             let sourceId = event.dataTransfer.getData("song");
             const toNum = (id) => id.substring(id.indexOf("-") + 1);
 
-            const targetNum = toNum(targetId);
-            const sourceNum = toNum(sourceId);
+            const targetNum = toNum(e.currentTarget.id);
+            const sourceNum = toNum(e.dataTransfer.getData("song"));
         
         this.setState({isDragging: false, draggedTo: false});
 
@@ -56,59 +43,58 @@ export default class SongCard extends React.Component {
         return this.props.id.substring("song-card-".length);
     }
 
-    render() {
-    const { song } = this.props;
-    const num = this.getItemNum(); 
+    render() {    
+    const { song, index, onDoubleClick, onDelete } = this.props;
+    const numFromId = Number(this.getItemNum());       
+    const displayNum = index != null ? index + 1 : numFromId;
     const itemClass = this.state.draggedTo ? "song-card-dragged-to" : "song-card";
 
-return (
-  <div
-    id={"song-" + num}
-    className={itemClass}
-    draggable="true"
-    onDragStart={this.handleDragStart}
-    onDragOver={this.handleDragOver}
-    onDragEnter={this.handleDragEnter}
-    onDragLeave={this.handleDragLeave}
-    onDrop={this.handleDrop}
-    onDoubleClick={() => this.props.startEditSong?.(Number(num))}
-  >
-    <div className="song-pill">
-        <span className="song-index">{Number(num) }.</span>
-
-        <div className="song-text">
-        <span className="song-title">
-          {song.youTubeId ? (
-            <a
-
-              href={`https://www.youtube.com/watch?v=${song.youTubeId}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {song.title}
-            </a>
-          ) : (
-            song.title
-          )}
-        </span>
-        {song.year ? <span className="song-year"> ({song.year})</span> : null}
-        <span className="by-word"> by </span>
-        <span className="song-artist">{song.artist}</span>
-      </div>
-
-      <button
-        className="song-delete-btn"
-        onClick={(e) => {
-          e.stopPropagation();
-          this.props.deleteSongCallback(Number(num)); 
-        }}
-        title="Remove song"
-        aria-label="Remove song"
+    return (
+      <div
+        id={`song-${displayNum}`}
+        className={itemClass}
+        draggable="true"
+        onDragStart={this.handleDragStart}
+        onDragOver={this.handleDragOver}
+        onDragEnter={this.handleDragEnter}
+        onDragLeave={this.handleDragLeave}
+        onDrop={this.handleDrop}
+        onDoubleClick={onDoubleClick}                 
       >
-        <span className="material-symbols-outlined">delete</span>
-            </button>
+        <div className="song-pill" onDoubleClick={onDoubleClick}>
+          <span className="song-index" onDoubleClick={onDoubleClick}>
+            {displayNum}.
+          </span>
+
+          <div className="song-text">
+            <span className="song-title">
+              {song.youTubeId ? (
+                <a
+                  href={`https://www.youtube.com/watch?v=${song.youTubeId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {song.title}
+                </a>
+              ) : (
+                song.title
+              )}
+            </span>
+            {song.year ? <span className="song-year"> ({song.year})</span> : null}
+            <span className="by-word"> by </span>
+            <span className="song-artist">{song.artist}</span>
+          </div>
+
+          <button
+            className="song-delete-btn"
+            onClick={(e) => { e.stopPropagation(); onDelete?.(index); }}
+            title="Remove song"
+            aria-label="Remove song"
+          >
+            <span className="material-symbols-outlined">delete</span>
+          </button>
+        </div>
       </div>
-      </div>
-);
-}
+    );
+  }
 }

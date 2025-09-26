@@ -364,7 +364,9 @@ class App extends React.Component {
                 <SongCards
                     currentList={this.state.currentList}
                     moveSongCallback={this.addMoveSongTransaction}
-                    requestEditSong={this.requestEditSong} 
+                    requestEditSong={this.requestEditSong}
+                    deleteSong={this.deleteSong}
+                    duplicateSong={this.duplicateSong}
                 />
                 <EditSongModal
                     isOpen={this.state.isSongEditOpen}
