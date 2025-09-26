@@ -7,6 +7,7 @@ import { jsTPS } from 'jstps';
 
 // OUR TRANSACTIONS
 import MoveSong_Transaction from './transactions/MoveSong_Transaction.js';
+import AddSong_Transaction from './transactions/AddSong_Transaction.js';
 
 // THESE REACT COMPONENTS ARE MODALS
 import DeleteListModal from './components/DeleteListModal.jsx';
@@ -231,12 +232,12 @@ class App extends React.Component {
     };
     addNewSong = () => {
         if (!this.state.currentList) return;
-        const songs = [
-        ...this.state.currentList.songs,
+        const newSong = [
         { title: "Untitled", artist: "Unknown", year: "—", youTubeId: "" },
         ];
-        this.updateCurrentListSongs(songs);
+        this.tps.addTransaction(new AddSong_Transaction(this, newSong, null));
     };
+
     getPlaylistSize = () => {
         return this.state.currentList.songs.length;
     }
@@ -353,13 +354,14 @@ class App extends React.Component {
                     renameListCallback={this.renameList}
                 />
                 <EditToolbar
-                    canAddSong={canAddSong}
-                    canUndo={canUndo}
-                    canRedo={canRedo}
-                    canClose={canClose} 
+                    canAddSong={this.state.currentList !== null}
+                    canUndo={this.tps.hasTransactionToUndo()}
+                    canRedo={this.tps.hasTransactionToRedo()}
+                    canClose={this.state.currentList !== null} 
                     undoCallback={this.undo}
                     redoCallback={this.redo}
                     closeCallback={this.closeCurrentList}
+                    addSongCallback={this.addNewSong}
                 />
                 <SongCards
                     currentList={this.state.currentList}

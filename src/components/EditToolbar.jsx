@@ -41,6 +41,15 @@ export default class EditToolbar extends React.Component {
                 className={closeClass} 
                 onClick={closeCallback}
             />
+            <button
+                id="add-song-button"
+                className={canAddSong ? "toolbar-btn" : "toolbar-btn disabled"}
+                disabled={!canAddSong}
+                onClick={canAddSong ? addSongCallback : undefined}
+                title="Add Song"
+            >
+                +
+            </button>
         </div>
         )
     }
