@@ -380,3 +380,86 @@ span {
     transform: rotate(0deg);
   }
 }
+
+material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+song-card,
+.song-card-dragged-to {
+  background-color: #5e8c5e;
+  border-radius: 20px;
+  padding: 8px 12px;
+  margin: 8px 10px;
+  color: #111;
+  font-size: 16pt;
+  cursor: grab;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+.song-card:hover { filter: brightness(0.98); }
+
+.song-card-dragged-to {
+  outline: 2px dashed #e1e4cb;
+  background-color: #365e36;
+}
+
+.song-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.song-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.song-index {
+  color: #fff;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+.song-pill {
+  background-color: #e6e6d6;
+  border-radius: 16px;
+  padding: 6px 12px;
+}
+
+.song-link { text-decoration: underline; color: inherit; }
+.song-year { opacity: 0.85; font-style: italic; }
+.song-artist { color: #d64141; font-style: italic; }
+
+.song-delete-btn {
+  background: #f0f0f0;
+  border: 1px solid #cfcfcf;
+  border-radius: 16px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.song-delete-btn:hover { background: #ffffff; }
+
+#song-cards { overflow: auto; }
+
+.modal-root {
+  max-width: 520px !important;
+  max-height: 380px !important;
+}
+
+.modal-north { font-size: 20pt !important; }
+.modal-center { font-size: 14pt !important; }
+.modal-button { font-size: 14pt !important; }
+
+.modal-center {
+  gap: 8px 12px;
+}
