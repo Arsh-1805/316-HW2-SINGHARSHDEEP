@@ -82,12 +82,16 @@ export default class PlaylistCard extends React.Component {
                         className="playlist-card-text">
                         {keyNamePair.name}
                     </span>
-                    <input
-                        type="button"
+                    <button
                         id={"delete-list-" + keyNamePair.key}
                         className="card-button"
                         onClick={this.handleDeleteList}
-                        value={"\u2715"} />
+                        title="Delete this playlist"
+                        aria-label="Delete this playlist"
+                        onMouseDown={(e) => e.stopPropagation()}  // avoid focusing parent on mousedown
+                    >
+                        <span className="material-symbols-outlined">delete</span>
+                    </button>
                 </div>
             );
         }
