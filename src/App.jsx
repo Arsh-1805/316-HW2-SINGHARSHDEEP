@@ -229,6 +229,7 @@ class App extends React.Component {
         songs.splice(index + 1, 0, copy);
         this.updateCurrentListSongs(songs);
     };
+    
     addNewSong = () => {
         if (!this.state.currentList) return;
         const newSong = { 

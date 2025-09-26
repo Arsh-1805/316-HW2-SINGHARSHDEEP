@@ -1,21 +1,19 @@
 export default class DeleteSong_Transaction {
   constructor(app, index) {
     this.app = app;
+    this.song = song;
     this.index = index;
-    this.deletedSong = null;
   }
-
-doTransaction() {
+  doTransaction() {
     const songs = [...this.app.state.currentList.songs];
-    // capture the song so we can undo
-    this.deletedSong = songs[this.index];
-    songs.splice(this.index, 1);
+    const pos = this.index ?? songs.length;
+    songs.splice(pos, 0, this.song);
     this.app.updateCurrentListSongs(songs);
-}
-
-undoTransaction() {
+    this.index = pos;
+  }
+  undoTransaction() {
     const songs = [...this.app.state.currentList.songs];
-    songs.splice(this.index, 0, this.deletedSong);
+    songs.splice(this.index, 1);
     this.app.updateCurrentListSongs(songs);
   }
 }

@@ -95,7 +95,7 @@ export default class SongCard extends React.Component {
 
           <button
             className="song-delete-btn"
-            onClick={(e) => { e.stopPropagation(); this.props.onDelete?.(this.props.index); }}
+            onClick={(e) => { e.stopPropagation(); this.props.onDelete?.(); }}
             title="Remove song"
             aria-label="Remove song"
           >
