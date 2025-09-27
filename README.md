@@ -1,4 +1,9 @@
-## Overview
-This repository is to be used for Stony Brook University's CSE 316, Fall 2025 Semester, Homework 2. This assignment is similar to HW 1 in that we are creating a similar application, but this time we're using the React framework for the front-end. Note, we are still not building a full stack application. There is no back-end. And we are still doing all style in our own CSS without any CSS frameworks. Those things will come soon enough. Note the manner with which we are saving things to Local Storage has changed slightly, where now playlists are being stored individually using key, value pairs. .
+# HW2 – The Playlister
+Author: Arshdeep Singh  
+Repo: https://github.com/Arsh-1805/316-HW2-SINGHARSHDEEP
 
-All assignment instructions are provided <a href='https://www.cs.stonybrook.edu/~cse316/hw2.html'>here</a>.
+## How to run
+```bash
+npm ci
+npm run dev
+# open http://localhost:5173
