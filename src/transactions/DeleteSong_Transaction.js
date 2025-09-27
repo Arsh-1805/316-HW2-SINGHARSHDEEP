@@ -3,13 +3,13 @@ export default class DeleteSong_Transaction {
   constructor(app, index) {
     this.app = app;
     this.index = index;
-    this.removed = null; 
+    this.removedSong = null; 
   }
 
   doTransaction() {
     const songs = [...this.app.state.currentList.songs];
     if (this.index < 0 || this.index >= songs.length) return;
-    this.removed = songs[this.index];
+    this.removedSong = songs[this.index];
     songs.splice(this.index, 1);
     this.app.updateCurrentListSongs(songs);
   }

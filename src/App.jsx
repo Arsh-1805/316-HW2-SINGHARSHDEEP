@@ -9,6 +9,8 @@ import { jsTPS } from 'jstps';
 import MoveSong_Transaction from './transactions/MoveSong_Transaction.js';
 import AddSong_Transaction from './transactions/AddSong_Transaction.js';
 import DeleteSong_Transaction from './transactions/DeleteSong_Transaction.js';
+import DeleteList_Transaction from './transactions/DeleteList_Transaction.js';
+
 
 // THESE REACT COMPONENTS ARE MODALS
 import DeleteListModal from './components/DeleteListModal.jsx';
@@ -131,9 +133,15 @@ class App extends React.Component {
         });
     }
     deleteMarkedList = () => {
-        this.deleteList(this.state.listKeyPairMarkedForDeletion.key);
+        const pair = this.state.listKeyPairMarkedForDeletion;
         this.hideDeleteListModal();
-    }
+
+        if (!pair) return;
+            const key = typeof pair.key === 'string' ? parseInt(pair.key, 10) : pair.key;
+
+        this.tps.processTransaction(new DeleteList_Transaction(this, key));
+    };
+    
     // THIS FUNCTION SPECIFICALLY DELETES THE CURRENT LIST
     deleteCurrentList = () => {
         if (this.state.currentList) {
@@ -287,8 +295,6 @@ class App extends React.Component {
     componentWillUnmount() {
         window.removeEventListener("keydown", this.handleGlobalKeys);
     }
-
-    
 
 
     // THIS FUNCTION MOVES A SONG IN THE CURRENT LIST FROM
