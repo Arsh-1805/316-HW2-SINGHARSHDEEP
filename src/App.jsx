@@ -55,7 +55,7 @@ class App extends React.Component {
     createNewList = () => {
         // FIRST FIGURE OUT WHAT THE NEW LIST'S KEY AND NAME WILL BE
         let newKey = this.state.sessionData.nextKey;
-        let newName = "Untitled"
+        let newName = "Untitled" + newKey;
 
         // MAKE THE NEW LIST
         let newList = {
@@ -288,26 +288,7 @@ class App extends React.Component {
         window.removeEventListener("keydown", this.handleGlobalKeys);
     }
 
-    handleGlobalKeys = (e) => {
-  // don't hijack typing in fields
-  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
-  if (tag === "input" || tag === "textarea") return;
-
-  const isMac = navigator.platform.toUpperCase().includes("MAC");
-  const ctrl = isMac ? e.metaKey : e.ctrlKey;
-
-  // Undo: Ctrl/Cmd+Z
-  if (ctrl && !e.shiftKey && e.key.toLowerCase() === "z") {
-    e.preventDefault();
-    this.undo();
-    return;
-  }
-  // Redo: Ctrl+Y  or  Shift+Ctrl+Z
-  if ((ctrl && e.key.toLowerCase() === "y") || (ctrl && e.shiftKey && e.key.toLowerCase() === "z")) {
-    e.preventDefault();
-    this.redo();
-  }
-};
+    
 
 
     // THIS FUNCTION MOVES A SONG IN THE CURRENT LIST FROM
